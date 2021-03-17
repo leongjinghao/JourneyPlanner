@@ -1,4 +1,4 @@
-stations = { "ns1/ew24": ["ns2", "ew23","ew25"],
+{ "ns1/ew24": ["ns2", "ew23","ew25"],
   "ns2": ["ns1/ew24", "ns3"],
   "ns3": ["ns2", "ns4/bp1"],
   "ns4/bp1": ["ns3", "ns5", "bp2"],
