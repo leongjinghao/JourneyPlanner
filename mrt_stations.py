@@ -173,4 +173,4 @@ stations = { "ns1/ew24": ["ns2", "ew23","ew25"],
   "pw7": ["pw6", "ne17/ptc"],
   "te1": ["ns9/te2"],
   "te3": ["ns9/te2"]
-}
+} 
