@@ -1,5 +1,3 @@
-#import Graph
-
 class Graph:
     adjList = {}
 
@@ -26,6 +24,3 @@ class Graph:
         else:
             self.adjList[vertice2] = []
             self.adjList[vertice2].append(vertice1)
-
-mrt = Graph("mrt_stations.txt")
-print(mrt.adjList[0][0]," : ", mrt.adjList[0][1])
