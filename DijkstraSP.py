@@ -27,5 +27,5 @@ class DijkstraSP:
             self.edgeTo[desVertex] = edge
             if self.pq.contains(desVertex):
                 self.pq.change(desVertex, self.timeTo[desVertex])
-            elif self.marked[desVertex] is False:
+            elif self.marked[desVertex] == False:
                 self.pq.insert(desVertex, self.timeTo[desVertex])

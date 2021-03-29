@@ -6,6 +6,12 @@ class PriorityQueue:
 
     def isEmpty(self):
         return len(self.heap) == 0
+
+    def insert(self, key, value):
+        node = Node(key, value)
+        self.heap.append(node)
+        # check and relocate newly inserted element if required
+        self.rotate_up()
     
     def rotate_up(self):
         # check newly inserted element
@@ -17,20 +23,13 @@ class PriorityQueue:
             # move up to check if another rotate up is required
             i = i // 2
 
-    def insert(self, key, value):
-        node = Node(key, value)
-        self.heap.append(node)
-        # check and relocate newly inserted element if required
-        self.rotate_up()
-
     def rotate_down(self, i):
         while i * 2 <= len(self.heap) - 1:
             min_child = self.getMinChild(i)
             if self.heap[i].value > self.heap[min_child].value:
                 # rotate down
-                self.heap[i], self.items[min_child] = self.heap[min_child], self.heap[i]
+                self.heap[i], self.heap[min_child] = self.heap[min_child], self.heap[i]
             i = min_child
-
 
     def getMinChild(self, i):
         if i * 2 + 1 > len(self.heap) - 1:
@@ -60,8 +59,6 @@ class PriorityQueue:
                 self.heap[i].value = value
                 # check if there is a need to rotate up
                 self.rotate_up()
-                # check if there is a need to rotate down
-                self.rotate_down(i)
 
 class Node:
     key = 0
