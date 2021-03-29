@@ -2,6 +2,7 @@ from DirectedEdge import DirectedEdge
 
 class EdgeWeightedDigraph:
     adjList = {}
+    allNodes = []
 
     def __init__(self, fileInput):
         text_file = open(fileInput, "r")
@@ -38,3 +39,10 @@ class EdgeWeightedDigraph:
                 allEdges.append(edge)
 
         return allEdges
+
+    def setAllNodes(self):
+        text_file = open("all_unique_stations", "r")
+        lines = text_file.readlines()
+        for line in lines:
+            node = line[:-1]
+            self.allNodes.append(node)

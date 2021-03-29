@@ -6,5 +6,5 @@ class DijkstraSP:
     marked = []
     pq = None
 
-    def __init__(self, graph, start):
-        
+    def __init__(self, digraph, start):
+        self.edgeTo = [[vertex, None] for vertex in digraph.adjList]
