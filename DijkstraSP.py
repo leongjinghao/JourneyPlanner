@@ -1,10 +1,31 @@
-from EdgeWeightedDigraph import EdgeWeightedDigraph
+from PriorityQueue import PriorityQueue
 
 class DijkstraSP:
-    distTo = []
+    timeTo = []
     edgeTo = []
     marked = []
     pq = None
 
     def __init__(self, digraph, start):
-        self.edgeTo = [[vertex, None] for vertex in digraph.adjList]
+        self.edgeTo = [None for i in range(len(digraph.allNodesIndex))]
+        self.marked = [False for i in range(len(digraph.allNodesIndex))]
+        self.timeTo = [float('Inf') for i in range(len(digraph.allNodesIndex))]
+        self.pq = PriorityQueue(start)
+        self.timeTo[start] = 0
+        while not self.pq.isEmpty():
+            vertex = self.pq.delete_min()
+            self.marked[vertex] = True
+            print("Relaxing vertex " + str(vertex))
+            for edge in digraph.adjList[vertex]:
+                self.relax(edge)
+
+    def relax(self, edge):
+        vertex = edge.vertex
+        desVertex = edge.desVertex
+        if self.timeTo[desVertex] > self.timeTo[vertex] + edge.weight:
+            self.timeTo[desVertex] = self.timeTo[vertex] + edge.weight
+            self.edgeTo[desVertex] = edge
+            if self.pq.contains(desVertex):
+                self.pq.change(desVertex, self.timeTo[desVertex])
+            elif self.marked[desVertex] is False:
+                self.pq.insert(desVertex, self.timeTo[desVertex])

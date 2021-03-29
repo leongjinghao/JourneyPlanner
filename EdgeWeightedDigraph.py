@@ -15,7 +15,7 @@ class EdgeWeightedDigraph:
             desVerticesWithWeight = desVertices.split(", ")
             for vertexWithWeight in desVerticesWithWeight:
                 desVertex, weight = vertexWithWeight.split(" - ")
-                self.addEdge(self.allNodesIndex[vertex], self.allNodesIndex[desVertex], weight)
+                self.addEdge(self.allNodesIndex[vertex], self.allNodesIndex[desVertex], int(weight))
     
     def addEdge(self, vertex, desVertex, weight):
         edge = DirectedEdge(vertex, desVertex, weight)
