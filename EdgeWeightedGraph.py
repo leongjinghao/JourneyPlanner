@@ -1,6 +1,6 @@
 from DirectedEdge import DirectedEdge
 
-class EdgeWeightedDigraph:
+class EdgeWeightedGraph:
     adjList = {}
     allNodesIndex = {}
 
@@ -20,11 +20,19 @@ class EdgeWeightedDigraph:
     def addEdge(self, vertex, desVertex, weight):
         edge = DirectedEdge(vertex, desVertex, weight)
 
-        if edge.vertex in self.adjList:
-            self.adjList[edge.vertex].append(edge)
+        if vertex in self.adjList:
+            self.adjList[vertex].append(edge)
         else:
-            self.adjList[edge.vertex] = []
-            self.adjList[edge.vertex].append(edge)
+            self.adjList[vertex] = []
+            self.adjList[vertex].append(edge)
+        
+        oppEdge = DirectedEdge(desVertex, vertex, weight)
+
+        if desVertex in self.adjList:
+            self.adjList[desVertex].append(oppEdge)
+        else:
+            self.adjList[desVertex] = []
+            self.adjList[desVertex].append(oppEdge)
 
     def getAdjacent(self, vertex):
         return self.adjList[vertex]

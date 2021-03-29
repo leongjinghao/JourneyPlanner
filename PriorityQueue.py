@@ -56,12 +56,12 @@ class PriorityQueue:
 
     def change(self, key, value):
         for i in range(len(self.heap)):
-            if heap[i].key == key:
-                heap[i].value = value
+            if self.heap[i].key == key:
+                self.heap[i].value = value
                 # check if there is a need to rotate up
                 self.rotate_up()
                 # check if there is a need to rotate down
-                self.rotate_down()
+                self.rotate_down(i)
 
 class Node:
     key = 0

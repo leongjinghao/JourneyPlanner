@@ -16,9 +16,8 @@ class DijkstraSP:
             vertex = self.pq.delete_min()
             self.marked[vertex] = True
             print("Relaxing vertex " + str(vertex))
-            if digraph.adjList.get(vertex, None) != None:
-                for edge in digraph.adjList[vertex]:
-                    self.relax(edge)
+            for edge in digraph.adjList[vertex]:
+                self.relax(edge)
 
     def relax(self, edge):
         vertex = edge.vertex
