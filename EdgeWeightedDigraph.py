@@ -2,19 +2,20 @@ from DirectedEdge import DirectedEdge
 
 class EdgeWeightedDigraph:
     adjList = {}
-    allNodes = []
+    allNodesIndex = {}
 
     def __init__(self, fileInput):
         text_file = open(fileInput, "r")
         lines = text_file.readlines()
+        self.setAllNodesIndex()
         for line in lines:
             #remove line breaks, which is the last char
             line = line[:-1]
             vertex, desVertices = line.split(": ")
             desVerticesWithWeight = desVertices.split(", ")
             for vertexWithWeight in desVerticesWithWeight:
-                desVertex, weight = vertexWithWeight.split("-")
-                self.addEdge(vertex, desVertex, weight)
+                desVertex, weight = vertexWithWeight.split(" - ")
+                self.addEdge(self.allNodesIndex[vertex], self.allNodesIndex[desVertex], weight)
     
     def addEdge(self, vertex, desVertex, weight):
         edge = DirectedEdge(vertex, desVertex, weight)
@@ -40,9 +41,11 @@ class EdgeWeightedDigraph:
 
         return allEdges
 
-    def setAllNodes(self):
-        text_file = open("all_unique_stations", "r")
+    def setAllNodesIndex(self):
+        text_file = open("all_unique_stations.csv", "r")
         lines = text_file.readlines()
+        index = 0
         for line in lines:
             node = line[:-1]
-            self.allNodes.append(node)
+            self.allNodesIndex[node] = index
+            index += 1
