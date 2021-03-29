@@ -49,3 +49,10 @@ class EdgeWeightedDigraph:
             node = line[:-1]
             self.allNodesIndex[node] = index
             index += 1
+
+    def getStationName(self, index):
+        for key, value in self.allNodesIndex.items():
+            if value == index:
+                return key
+        
+        return "key does not exist"

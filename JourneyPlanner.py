@@ -13,8 +13,6 @@ for edge in allEdges:
     print(edge.toString())
 
 
-edgeTo = [None for i in range(len(mrt.allNodesIndex))]
-
 print(len(edgeTo))
 
 edges = mrt.adjList[mrt.allNodesIndex["NS24/NE6/CC1"]]
@@ -22,6 +20,12 @@ for edge in edges:
     print(edge.vertex, edge.desVertex, edge.weight)
 '''
 path = DijkstraSP(mrt, 5)
+current_stn = 63
+print(mrt.getStationName(current_stn))
+while (current_stn != 5):
+    current_stn = path.edgeTo[current_stn].vertex
+    print(mrt.getStationName(current_stn))
+#print(mrt.allNodesIndex)
 #print(len(edgeTo))
 
 #for line in edgeTo:

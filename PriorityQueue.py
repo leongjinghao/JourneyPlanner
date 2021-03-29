@@ -1,12 +1,12 @@
 class PriorityQueue:
     heap = []
 
-    def isEmpty(self):
-        return len(self.heap) == 0
-
     def __init__(self, start):
         self.insert(start, 0)
 
+    def isEmpty(self):
+        return len(self.heap) == 0
+    
     def rotate_up(self):
         # check newly inserted element
         i = len(self.heap) - 1
@@ -36,7 +36,7 @@ class PriorityQueue:
         if i * 2 + 1 > len(self.heap) - 1:
             return i * 2
 
-        if self.heap[i * 2] < self.heap[i * 2 + 1]:
+        if self.heap[i * 2].value < self.heap[i * 2 + 1].value:
             return i * 2
 
         return i * 2 + 1
@@ -45,7 +45,7 @@ class PriorityQueue:
         min_node = self.heap[0]
         self.heap[0] = self.heap[len(self.heap) - 1]
         self.heap.pop()
-        self.rotate_down(0)
+        self.rotate_down(1)
         return min_node.key
 
     def contains(self, key):
