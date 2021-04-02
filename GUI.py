@@ -1,6 +1,7 @@
 from tkinter import *
 from PIL import ImageTk, Image
-from Graph import Graph
+from EdgeWeightedGraph import EdgeWeightedGraph
+from DijkstraSP import DijkstraSP
 import csv
 import time
 
@@ -62,7 +63,7 @@ class GUI:
         instructions = Label(mainGUI,
                              text="INSTRUCTIONS\nLeft click to select current location\n Right click to select destination")
         instructions.config(font=("Arial", 13))
-        instructions.place(x=1230, y=600, height=50, width=250)
+        instructions.place(x=1230, y=600, height=60, width=250)
 
         startButton = Button(mainGUI, text="START", command=lambda: [map.coords(destinationLocationCircle, 0, 0, 0, 0),
                                                                      map.coords(currentLocationCircle, 0, 0, 0, 0),
@@ -108,8 +109,22 @@ class GUI:
 
     def displayCircles(self, map):
         if self.currentLocation != "" and self.destination != "":
-            route = Graph('mrt_stations.txt')
-            route = route.shortest_path(str(self.currentLocation), str(self.destination))
+            mrt = EdgeWeightedGraph("mrt_stations_weighted.csv")
+
+            route = []
+            routeReverse = []
+            path = DijkstraSP(mrt, mrt.allNodesIndex[str(self.currentLocation)])
+            dest_stn = mrt.allNodesIndex[str(self.destination)]
+            routeReverse.append(mrt.getStationName(dest_stn))
+
+            while (dest_stn != mrt.allNodesIndex[str(self.currentLocation)]):
+                dest_stn = path.edgeTo[dest_stn].vertex
+                routeReverse.append(mrt.getStationName(dest_stn))
+
+            while len(routeReverse) != 0:
+                # print route in the reverse order
+                route.append(routeReverse.pop())
+
             print(route)
 
             for i in range(122):
