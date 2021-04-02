@@ -14,10 +14,11 @@ class GUI:
     currentLocation = ""
     route = []
     routeCircle = [None] * 122
+    mainGUI = Tk(className='Journey Planner')  # Sets window name
 
-    def __init__(self, mainGUI):
+    def __init__(self):
         self.readCsvCoordinates()
-        self.guiInstance(mainGUI)
+        self.guiInstance(self.mainGUI)
 
     def readCsvCoordinates(self):
         with open('mapCoordinates.csv', 'r', newline='',
