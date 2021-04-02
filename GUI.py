@@ -53,6 +53,14 @@ class GUI:
         destinationTitle.config(font=("MS Sans Serif", 20))
         destinationTitle.place(x=1230, y=200, height=50, width=250)
 
+        timeTitle = Label(mainGUI, text="Estimated Time")
+        timeTitle.config(font=("Arial", 20))
+        timeTitle.place(x=1230, y=450, height=50, width=250)
+
+        time_taken_display = Label(mainGUI, text="")
+        time_taken_display.config(font=("Courier", 20))
+        time_taken_display.place(x=1230, y=500, height=50, width=250)
+        
         destination = Label(mainGUI, text="", fg="darkred")
         destination.config(font=("Courier", 20))
         destination.place(x=1230, y=250, height=50, width=250)
@@ -66,7 +74,7 @@ class GUI:
 
         startButton = Button(mainGUI, text="START", command=lambda: [map.coords(destinationLocationCircle, 0, 0, 0, 0),
                                                                      map.coords(currentLocationCircle, 0, 0, 0, 0),
-                                                                     self.displayCircles(map)])
+                                                                     self.displayCircles(map, time_taken_display)])
         startButton.config(font=("Arial", 30))
         startButton.place(x=1230, y=350, height=50, width=250)
 
@@ -106,9 +114,11 @@ class GUI:
             writer = csv.writer(f)
             writer.writerow(list(xyCoords))
 
-    def displayCircles(self, map):
+    def displayCircles(self, map, time_taken_display):
         if self.currentLocation != "" and self.destination != "":
-            route = computeRoute(str(self.currentLocation), str(self.destination))
+            returnBag = computeRoute(str(self.currentLocation), str(self.destination))
+            route = returnBag[0]
+            timeToDest = returnBag[1]
 
             print(route)
 
@@ -119,3 +129,5 @@ class GUI:
                         self.routeCircle[i] = map.create_oval(int(self.coordinatesXY[i][0]), int(self.coordinatesXY[i][1]),
                                                               int(self.coordinatesXY[i][2]), int(self.coordinatesXY[i][3]),
                                                               fill='MAGENTA')
+            
+            time_taken_display.config(text=str(timeToDest)+" mins")
