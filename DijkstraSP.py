@@ -15,9 +15,10 @@ class DijkstraSP:
         while not self.pq.isEmpty():
             vertex = self.pq.delete_min()
             self.marked[vertex] = True
-            print("Relaxing vertex " + str(vertex))
+            print("Relaxing neighbours of vertex " + str(vertex) + ", " + str(self.timeTo[vertex]))
             for edge in digraph.adjList[vertex]:
                 self.relax(edge)
+                print("     - " + str(edge.desVertex) + ", " + str(self.timeTo[edge.desVertex]))
 
     def relax(self, edge):
         vertex = edge.vertex

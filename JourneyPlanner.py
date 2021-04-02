@@ -2,7 +2,7 @@ from EdgeWeightedGraph import EdgeWeightedGraph
 from queue import PriorityQueue
 from DijkstraSP import DijkstraSP
 
-mrt = EdgeWeightedGraph("mrt_stations_weighted_1.csv")
+mrt = EdgeWeightedGraph("mrt_stations_weighted.csv")
 '''
 allEdges = mrt.getAllEdges()
 #print(allEdges)
@@ -17,11 +17,11 @@ for edge in edges:
 
 
 route = []
-path = DijkstraSP(mrt, mrt.allNodesIndex["EW5"])
-dest_stn = mrt.allNodesIndex["NS25/EW13"]
+path = DijkstraSP(mrt, mrt.allNodesIndex["NS13"])
+dest_stn = mrt.allNodesIndex["CC6"]
 route.append(mrt.getStationName(dest_stn))
 
-while (dest_stn != mrt.allNodesIndex["EW5"]):
+while (dest_stn != mrt.allNodesIndex["NS13"]):
     dest_stn = path.edgeTo[dest_stn].vertex
     route.append(mrt.getStationName(dest_stn))
 
