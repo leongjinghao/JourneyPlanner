@@ -1,16 +1,17 @@
-from Graph import Graph
-from EdgeWeightedDigraph import EdgeWeightedDigraph
+from EdgeWeightedGraph import EdgeWeightedGraph
+from DijkstraSP import DijkstraSP
 
-#mrt = Graph("mrt_stations.txt")
-#print(mrt.shortest_path("EW28", "NE14"))
+mrt = EdgeWeightedGraph("mrt_stations_weighted.csv")
 
-mrt = EdgeWeightedDigraph("mrt_stations_weighted.txt")
-'''
-allEdges = mrt.getAllEdges()
-print(allEdges)
-for edge in allEdges:
-    print(edge.toString())
-'''
-arr = []
-arr.insert("a", 0.0)
-print(arr)
+route = []
+path = DijkstraSP(mrt, mrt.allNodesIndex["NS13"])
+dest_stn = mrt.allNodesIndex["CC6"]
+route.append(mrt.getStationName(dest_stn))
+
+while (dest_stn != mrt.allNodesIndex["NS13"]):
+    dest_stn = path.edgeTo[dest_stn].vertex
+    route.append(mrt.getStationName(dest_stn))
+
+while len(route) != 0:
+    # print route in the reverse order
+    print(route.pop())
