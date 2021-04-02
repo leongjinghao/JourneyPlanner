@@ -6,17 +6,23 @@ class DijkstraSP:
     marked = []
     pq = None
 
-    def __init__(self, digraph, start):
-        self.edgeTo = [None for i in range(len(digraph.allNodesIndex))]
-        self.marked = [False for i in range(len(digraph.allNodesIndex))]
-        self.timeTo = [float('Inf') for i in range(len(digraph.allNodesIndex))]
+    def __init__(self, graph, start):
+        # reset on every construct
+        self.timeTo = []
+        self.edgeTo = []
+        self.marked = []
+        self.pq = None
+
+        self.edgeTo = [None for i in range(len(graph.allNodesIndex))]
+        self.marked = [False for i in range(len(graph.allNodesIndex))]
+        self.timeTo = [float('Inf') for i in range(len(graph.allNodesIndex))]
         self.pq = PriorityQueue(start)
         self.timeTo[start] = 0
         while not self.pq.isEmpty():
             vertex = self.pq.delete_min()
             self.marked[vertex] = True
             print("Relaxing neighbours of vertex " + str(vertex) + ", " + str(self.timeTo[vertex]))
-            for edge in digraph.adjList[vertex]:
+            for edge in graph.adjList[vertex]:
                 self.relax(edge)
                 print("     - " + str(edge.desVertex) + ", " + str(self.timeTo[edge.desVertex]))
 

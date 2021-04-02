@@ -5,6 +5,10 @@ class EdgeWeightedGraph:
     allNodesIndex = {}
 
     def __init__(self, fileInput):
+        # reset on every construct
+        self.adjList = {}
+        self.allNodesIndex = {}
+
         text_file = open(fileInput, "r")
         lines = text_file.readlines()
         self.setAllNodesIndex()

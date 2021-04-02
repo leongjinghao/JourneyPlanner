@@ -4,6 +4,9 @@ class PriorityQueue:
 
     # constructor for priority queue class
     def __init__(self, start):
+        # reset on every construct
+        self.heap = []
+
         # insert dummy node on the first index, to facilitate subsequent math operations
         self.insert(None, None)
         # insert the starting vertix on construction, value default to 0

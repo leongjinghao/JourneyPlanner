@@ -1,7 +1,6 @@
 from tkinter import *
 from PIL import ImageTk, Image
-from EdgeWeightedGraph import EdgeWeightedGraph
-from DijkstraSP import DijkstraSP
+from JourneyPlanner import computeRoute
 import csv
 import time
 
@@ -109,21 +108,7 @@ class GUI:
 
     def displayCircles(self, map):
         if self.currentLocation != "" and self.destination != "":
-            mrt = EdgeWeightedGraph("mrt_stations_weighted.csv")
-
-            route = []
-            routeReverse = []
-            path = DijkstraSP(mrt, mrt.allNodesIndex[str(self.currentLocation)])
-            dest_stn = mrt.allNodesIndex[str(self.destination)]
-            routeReverse.append(mrt.getStationName(dest_stn))
-
-            while (dest_stn != mrt.allNodesIndex[str(self.currentLocation)]):
-                dest_stn = path.edgeTo[dest_stn].vertex
-                routeReverse.append(mrt.getStationName(dest_stn))
-
-            while len(routeReverse) != 0:
-                # print route in the reverse order
-                route.append(routeReverse.pop())
+            route = computeRoute(str(self.currentLocation), str(self.destination))
 
             print(route)
 
