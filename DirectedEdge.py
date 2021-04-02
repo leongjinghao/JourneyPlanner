@@ -4,6 +4,12 @@ class DirectedEdge:
     weight = None
 
     def __init__(self, vertex, desVertex, weight):
+
+        self.vertex = None
+        self.desVertex = None
+        self.weight = None
+
+
         self.vertex = vertex
         self.desVertex = desVertex
         self.weight = weight
