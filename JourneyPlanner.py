@@ -18,4 +18,5 @@ def computeRoute(currentLocation, destination):
         # print route in the reverse order
         route.append(routeReverse.pop())
 
+    print("Time to {0}: {1} min".format(destination, path.timeTo[mrt.allNodesIndex[destination]]))
     return route
