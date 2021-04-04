@@ -28,13 +28,13 @@ class DijkstraSP:
             # set the vertex as marked (visited)
             self.marked[vertex] = True
             # checking
-            print("Relaxing neighbours of vertex " + str(vertex) + ", " + str(self.timeTo[vertex]))
+            print("Relaxing neighbours of vertex " + str(vertex) + ", W: " + str(self.timeTo[vertex]))
             # for all edges of current vertex
             for edge in graph.adjList[vertex]:
                 # relax all the edges from vertex
                 self.relax(edge)
                 # checking
-                print("     - " + str(edge.desVertex) + ", " + str(self.timeTo[edge.desVertex]))
+                print("     - " + str(edge.desVertex) + ", W: " + str(self.timeTo[edge.desVertex]))
 
     # method for relaxing edges of a vertex
     def relax(self, edge):
