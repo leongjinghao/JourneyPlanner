@@ -37,7 +37,7 @@ class WeightedDirectedEdge:
 
     # "==" operation between 2 vertices
     def __eq__(self, other):
-        return self.weight == other.weight
+        return self.vertex == other.vertex and self.desVertex == other.desVertex and self.weight == other.weight
 
     def toString(self):
         return str(self.vertex) + " - " + \

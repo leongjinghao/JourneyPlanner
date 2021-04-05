@@ -30,6 +30,9 @@ class EdgeWeightedGraph:
                 desVertex, weight = vertexWithWeight.split(" - ")
                 # add the edge (destination vertex and its weight) of the vertex into the adjList
                 self.addEdge(self.allNodesIndex[vertex], self.allNodesIndex[desVertex], int(weight))
+        
+        # remove edges to brokendown stations, if there is any
+        self.stnBreakdown()
     
     # method to add edge into the adjList
     def addEdge(self, vertex, desVertex, weight):
@@ -98,3 +101,27 @@ class EdgeWeightedGraph:
         
         # if no match found
         return "key does not exist"
+
+    # remove edges from adj list, simulate station breakdown
+    def stnBreakdown(self):
+        # retrieve stations which have broken down
+        stn_breakdown_file = open("stn_breakdown.csv", "r")
+        stn_breakdown = stn_breakdown_file.read()
+        
+        # return out of function if there is no input for station breakdown
+        if (stn_breakdown == ""): return
+        
+        stn_breakdown = stn_breakdown.split(", ")
+        # for each station listed as brokendown
+        for station in stn_breakdown:
+            # retrieve the index of the brokendown station
+            station_index = self.allNodesIndex[station]
+            # retrieve adj edges of the brokendown stations, will need to remove edges 
+            # of neighbour vertices to the brokendown station
+            adj_edges = self.adjList[station_index]
+            # remove the edge to the brokendown station from the neighbour vertices
+            for adj_edge in adj_edges:
+                # remove edge from adj vertex to brokendown station
+                self.adjList[adj_edge.desVertex].remove(WeightedDirectedEdge(adj_edge.desVertex, adj_edge.vertex,adj_edge.weight))
+            # lastly, remove all edges of the brokendown station by deleting the whole entry
+            del self.adjList[station_index]
