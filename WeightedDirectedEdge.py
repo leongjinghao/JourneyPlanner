@@ -1,4 +1,4 @@
-class DirectedEdge:
+class WeightedDirectedEdge:
     vertex = None
     desVertex = None
     weight = None

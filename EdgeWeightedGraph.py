@@ -1,4 +1,4 @@
-from DirectedEdge import DirectedEdge
+from WeightedDirectedEdge import WeightedDirectedEdge
 
 class EdgeWeightedGraph:
     adjList = {}
@@ -34,7 +34,7 @@ class EdgeWeightedGraph:
     # method to add edge into the adjList
     def addEdge(self, vertex, desVertex, weight):
         # initialise a directed edge, with the given input
-        edge = DirectedEdge(vertex, desVertex, weight)
+        edge = WeightedDirectedEdge(vertex, desVertex, weight)
 
         # if vertex is already inside the adjList, append edge into the list within the adjList of the vertex
         if vertex in self.adjList:
@@ -45,7 +45,7 @@ class EdgeWeightedGraph:
             self.adjList[vertex].append(edge)
         
         # initialise edge for the other direction, from destination vertex to current vertex
-        oppEdge = DirectedEdge(desVertex, vertex, weight)
+        oppEdge = WeightedDirectedEdge(desVertex, vertex, weight)
 
         # if desVertex is already inside the adjList, append edge into the list within the adjList of desVertex
         if desVertex in self.adjList:

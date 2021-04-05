@@ -49,7 +49,7 @@ class PriorityQueue:
 
     # check if node on current index i, need to move down , perform steps accordingly
     def move_down(self, i):
-        # while index i is not the last index
+        # while node at index i has at least one child
         while i * 2 <= self.__len__():
             # get the smallest child of node at index i
             min_child = self.getMinChild(i)
