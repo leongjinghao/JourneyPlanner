@@ -112,17 +112,17 @@ print(addStationApp.newStations)
 for station in addStationApp.newStations:
     # if it is a non existing station add them in the following csv files
     if (station[8] == False):
-        with open('mapCoordinates(test).csv', 'a', newline='', encoding='utf-8') as f:
+        with open('mapCoordinates.csv', 'a', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             writer.writerow(list(station[0:6]))
     
-        with open('all_unique_stations(test).csv', 'a', newline='', encoding='utf-8') as f:
+        with open('all_unique_stations.csv', 'a', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             writer.writerow(list([station[5]]))
     
     # if there is a new edge to add
     if (station[6] != "-"):
         # add the edge to the mrt_stations_weighted.csv regarless if it includes existing station
-        with open('mrt_stations_weighted(test).csv', 'a', newline='', encoding='utf-8') as f:
+        with open('mrt_stations_weighted.csv', 'a', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             writer.writerow(list(["{0}: {1} - {2}".format(station[5], station[6], station[7])]))
