@@ -124,6 +124,3 @@ for station in addStationApp.newStations:
         with open('mrt_stations_weighted(test).csv', 'a', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             writer.writerow(list(["{0}: {1} - {2}".format(station[5], station[6], station[7])]))
-    
-        
-print("I can do more stuff after GUI")
