@@ -172,7 +172,7 @@ class GUI:
 
             print(route)
 
-            for i in range(122):
+            for i in range(len(self.coordinatesXY)):
                 map.delete(self.routeCircle[i])
                 for x in range(len(route)):
                     if route[x] == self.coordinatesXY[i][5].replace("\r\n", ""):
