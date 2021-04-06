@@ -105,8 +105,10 @@ class GUI:
     def abortAll(self):
         quit()
 
+# main() call the GUI for Add Station App
 addStationApp = GUI()
 print(addStationApp.newStations)
+# for each station's inputs on GUI
 for station in addStationApp.newStations:
     # if it is a non existing station add them in the following csv files
     if (station[8] == False):
