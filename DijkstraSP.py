@@ -33,8 +33,6 @@ class DijkstraSP:
             for edge in graph.adjList[vertex]:
                 # relax all the edges from vertex
                 self.relax(edge)
-                # checking
-                print("     - " + str(edge.desVertex) + ", W: " + str(self.timeTo[edge.desVertex]))
 
     # method for relaxing edges of a vertex
     def relax(self, edge):
@@ -47,6 +45,8 @@ class DijkstraSP:
         if self.timeTo[desVertex] > self.timeTo[vertex] + edge.weight:
             self.timeTo[desVertex] = self.timeTo[vertex] + edge.weight
             self.edgeTo[desVertex] = edge
+            # checking relaxed edge
+            print("     - " + str(edge.desVertex) + ", W: " + str(self.timeTo[edge.desVertex]))
             # update the values stored in the priority queue as well
             if self.pq.contains(desVertex):
                 self.pq.change(desVertex, self.timeTo[desVertex])
