@@ -232,5 +232,5 @@ class GUI:
                                                               fill='ORANGE')
 
             legendLabel = Label(map, text=self.bus_stations[i][1], bg = "white")
-            legendLabel.config(font=("Arial", 5,'bold'))
-            legendLabel.place(x=int(self.bus_stations[i][2])-10, y=int(self.bus_stations[i][3])+15, height=15, width=len(self.bus_stations[i][1])*4)
+            legendLabel.config(font=("Arial", 5, 'bold'))
+            legendLabel.place(x=int(self.bus_stations[i][2])+15, y=int(self.bus_stations[i][3]), height=15, width=len(self.bus_stations[i][1])*4)
