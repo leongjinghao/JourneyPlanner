@@ -10,11 +10,12 @@ class GUI:
     newStationCode = StringVar()
     nextStationCode = StringVar()
     travelTime = IntVar()
-    existing = False
     altCol = ['white','grey25']
     newStations = []
     newStationCircle = [None] * 100 # display a max of 100 added point on gui
     newStationCircleCounter = 0
+    isMrt = True
+    existing = False
 
     def __init__(self):
         self.guiInstance(self.mainGUI)
@@ -53,6 +54,15 @@ class GUI:
         travelTimeTextBox = Entry(mainGUI, textvariable=self.travelTime, font=("Arial", 15),width=20)
         travelTimeTextBox.place(x=1230, y=400, height=35, width=250)
 
+
+        Label(mainGUI, text="Is it an MRT station?", bg=self.background, font=("Arial", 13)).place(x=1230, y=500)
+        isMrt = BooleanVar()
+        isMrtRadioButton = Radiobutton(mainGUI, text="Yes", variable=isMrt, value=True, bg=self.background)
+        isMrtRadioButton.place(x=1230, y=550)
+
+        isMrtRadioButton = Radiobutton(mainGUI, text="No", variable=isMrt, value=False, bg=self.background)
+        isMrtRadioButton.place(x=1300, y=550)
+
         existingButton = Button(mainGUI, text="Existing", command=lambda: self.setExisting(existingButton))
         existingButton.config(font=("Arial", 13), bg='white')
         existingButton.place(x=1230, y=450, height=30, width=70)
@@ -60,13 +70,13 @@ class GUI:
         confirmButton = Button(mainGUI, text="Add Station", 
                                 command=lambda: self.storeCoords(map, self.xyCoords, self.newStationName, 
                                                                       self.newStationCode, self.nextStationCode, 
-                                                                      self.travelTime, self.existing))
+                                                                      self.travelTime, self.existing, isMrt.get()))
         confirmButton.config(font=("Arial", 30))
-        confirmButton.place(x=1230, y=500, height=50, width=250)
+        confirmButton.place(x=1230, y=600, height=50, width=250)
 
         abortButton = Button(mainGUI, text="Abort All Changes", command=lambda: self.abortAll())
         abortButton.config(font=("Arial", 20), fg = 'red')
-        abortButton.place(x=1230, y=650, height=50, width=250)
+        abortButton.place(x=1230, y=690, height=50, width=250)
 
         mainGUI.mainloop()  # Run the GUI
 
@@ -85,7 +95,7 @@ class GUI:
         
         self.xyCoords = xyCoords
 
-    def storeCoords(self, map, xyCoords, stnName, stnCode, nextStnCode, travelTime, existing):
+    def storeCoords(self, map, xyCoords, stnName, stnCode, nextStnCode, travelTime, existing, isMrt):
         # show added station on gui
         self.newStationCircle[self.newStationCircleCounter] = \
             map.create_oval(xyCoords[0], xyCoords[1], xyCoords[2], xyCoords[3], fill='MAGENTA')
@@ -93,7 +103,7 @@ class GUI:
         # store the coordinates inside newStations list
         self.newStations.append([xyCoords[0], xyCoords[1], xyCoords[2], xyCoords[3], 
                                     stnName.get(), stnCode.get(), nextStnCode.get(), 
-                                    travelTime.get(), existing])
+                                    travelTime.get(), existing, isMrt])
 
     def setExisting(self, existingButton):
         # invert boolean value on click
@@ -126,3 +136,9 @@ for station in addStationApp.newStations:
         with open('mrt_stations_weighted.csv', 'a', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             writer.writerow(list(["{0}: {1} - {2}".format(station[5], station[6], station[7])]))
+
+    if (station[9] == False):
+        with open('bus_stations.csv', 'a', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow([station[5], station[4], station[0], station[1], station[2], station[3]])
+
