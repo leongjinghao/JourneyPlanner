@@ -2,9 +2,10 @@ from tkinter import *
 from PIL import ImageTk, Image
 from JourneyPlanner import computeRoute
 import csv
-import time
+import ctypes
 
 
+# GUI class
 class GUI:
     background = 'lightgrey'
     coordinatesXY = []
@@ -24,6 +25,7 @@ class GUI:
         self.breakdownCircle = [None] * len(self.brokedownstations[0])
         self.guiInstance(self.mainGUI)
 
+    # Function to read data from csv files
     def readCsvCoordinates(self):
         with open('mapCoordinates.csv', 'r', newline='',
                   encoding='utf-8') as savedItemsIO:  # Open savedItems.csv file (must be same directory as this program)
@@ -38,6 +40,7 @@ class GUI:
             for row in savedItemsIO:
                 self.brokedownstations.append(row.split(","))
 
+    # Function that instantiates the overall GUI
     def guiInstance(self, mainGUI):
         mainGUI.geometry("1500x750+10+0")  # Sets window size
         mainGUI.configure(bg=self.background)
@@ -54,7 +57,7 @@ class GUI:
         legendLabel.config(font=("MS Sans Serif", 15))
         legendLabel.place(x=0, y=0, height=50, width=250)
 
-        map2.create_oval(30,50,40,60,fill="Black")
+        map2.create_oval(30, 50, 40, 60, fill="Black")
         map2.create_oval(30, 70, 40, 80, fill="lime")
         map2.create_oval(30, 90, 40, 100, fill="red")
         map2.create_oval(30, 110, 40, 120, fill="magenta")
@@ -121,10 +124,12 @@ class GUI:
 
         mainGUI.mainloop()  # Run the GUI
 
+    # Function that places the Singapore MRT map onto the GUI
     def initMap(self, map, mapimage):
         map.place(x=10, y=10)
         map.create_image(600, 390, image=mapimage)
 
+    # Run this function upon clicking on the map
     def onClick(self, event, Location, LocationCircle, map, mode):
         xyCoords = []
         xyCoords.append(event.x - 7)
@@ -158,17 +163,22 @@ class GUI:
                     break
 
 
-
     def writeCoords(self, xyCoords):
         with open('mapCoordinates.csv', 'a', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             writer.writerow(list(xyCoords))
 
+    # Function that displays the route from user's current location to destination on the map
     def displayCircles(self, map, time_taken_display):
+        route = []
+        timeToDest = 0
         if self.currentLocation != "" and self.destination != "":
-            returnBag = computeRoute(str(self.currentLocation), str(self.destination))
-            route = returnBag[0]
-            timeToDest = returnBag[1]
+            try:
+                returnBag = computeRoute(str(self.currentLocation), str(self.destination))
+                route = returnBag[0]
+                timeToDest = returnBag[1]
+            except:
+                ctypes.windll.user32.MessageBoxW(0, "No route to your destination.", "Error", 1)
 
             print(route)
 
@@ -184,7 +194,8 @@ class GUI:
 
             time_taken_display.config(text=str(timeToDest) + " mins")
 
-    def displayBreakdown(self, map):  # Method to display broken down stations in a form of black circles
+    # Function to display unavailable stations
+    def displayBreakdown(self, map):
         for i in range(len(self.brokedownstations[0])):
             map.delete(self.breakdownCircle[i])
             for j in range(len(self.coordinatesXY)):
