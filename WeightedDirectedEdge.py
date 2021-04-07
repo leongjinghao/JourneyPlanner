@@ -19,23 +19,23 @@ class WeightedDirectedEdge:
     def dest(self):
         return self.desVertex
 
-    # "<" operation between 2 vertices
+    # "<" operation between 2 edges' weight
     def __lt__(self, other):
         return self.weight < other.weight
 
-    # ">" operation between 2 vertices
+    # ">" operation between 2 edges' weight
     def __gt__(self, other):
         return self.weight > other.weight
 
-    # ">=" operation between 2 vertices
+    # ">=" operation between 2 edges' weight
     def __ge__(self, other):
         return self.weight >= other.weight
 
-    # "<=" operation between 2 vertices
+    # "<=" operation between 2 edges' weight
     def __le__(self, other):
         return self.weight <= other.weight
 
-    # "==" operation between 2 vertices
+    # "==" operation between 2 edges, test equality between 2 edges
     def __eq__(self, other):
         return self.vertex == other.vertex and self.desVertex == other.desVertex and self.weight == other.weight
 

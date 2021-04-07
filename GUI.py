@@ -189,6 +189,7 @@ class GUI:
         timeToDest = 0
         if self.currentLocation != "" and self.destination != "":
             try:
+                # computeRoute returns 2 items, route[] (list) and timeToDest (int)
                 returnBag = computeRoute(str(self.currentLocation), str(self.destination))
                 route = returnBag[0]
                 timeToDest = returnBag[1]

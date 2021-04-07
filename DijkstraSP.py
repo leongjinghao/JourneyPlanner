@@ -45,7 +45,7 @@ class DijkstraSP:
         if self.timeTo[desVertex] > self.timeTo[vertex] + edge.weight:
             self.timeTo[desVertex] = self.timeTo[vertex] + edge.weight
             self.edgeTo[desVertex] = edge
-            # checking relaxed edge
+            # display relaxed edge
             print("     - " + str(edge.desVertex) + ", W: " + str(self.timeTo[edge.desVertex]))
             # update the values stored in the priority queue as well
             if self.pq.contains(desVertex):
