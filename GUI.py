@@ -29,7 +29,7 @@ class GUI:
         self.busCircle = [None] * len(self.bus_stations)
         self.guiInstance(self.mainGUI)
 
-    # Function to read data from csv files
+    # Method that reads data from csv files and stores them to the respective lists
     def readCsvCoordinates(self):
         with open('mapCoordinates.csv', 'r+', newline='',
                   encoding='utf-8') as savedItemsIO:  # Open savedItems.csv file (must be same directory as this program)
@@ -139,12 +139,12 @@ class GUI:
 
         mainGUI.mainloop()  # Run the GUI
 
-    # Function that places the Singapore MRT map onto the GUI
+    # Method that places the Singapore MRT map onto the GUI
     def initMap(self, map, mapimage):
         map.place(x=10, y=10)
         map.create_image(600, 390, image=mapimage)
 
-    # Run this function upon clicking on the map
+    # Run this method upon clicking on the map
     def onClick(self, event, Location, LocationCircle, map, mode):
         xyCoords = []
         xyCoords.append(event.x - 7)
@@ -183,7 +183,7 @@ class GUI:
             writer = csv.writer(f)
             writer.writerow(list(xyCoords))
 
-    # Function that displays the route from user's current location to destination on the map
+    # Method that displays the route from user's current location to destination on the map
     def displayCircles(self, map, time_taken_display):
         route = []
         timeToDest = 0
@@ -209,7 +209,7 @@ class GUI:
 
             time_taken_display.config(text=str(timeToDest) + " mins")
 
-    # Function to display unavailable stations
+    # Method to display unavailable stations
     def displayBreakdown(self, map):
         for i in range(len(self.brokedownstations)):
             map.delete(self.breakdownCircle[i])
@@ -220,7 +220,7 @@ class GUI:
                                                               int(self.coordinatesXY[j][2]) + 5,
                                                               int(self.coordinatesXY[j][3]) + 5,
                                                               fill='BLACK')
-
+    # Method that displays bus stations on the map
     def displayBusStations(self, map):
         for i in range(len(self.bus_stations)):
             map.delete(self.busCircle[i])
