@@ -16,18 +16,21 @@ class GUI:
     route = []
     routeCircle = []  # Stores GUI circle objects that represents the routes
     breakdownCircle = []  # Stores GUI circle objects that represents a broken down station
+    busCircle = []
     mainGUI = Tk(className='Journey Planner')  # Sets window name
     brokedownstations = []
+    bus_stations = []
 
     def __init__(self):
         self.readCsvCoordinates()
         self.routeCircle = [None] * len(self.coordinatesXY)
         self.breakdownCircle = [None] * len(self.brokedownstations[0])
+        self.busCircle = [None] * len(self.bus_stations)
         self.guiInstance(self.mainGUI)
 
     # Function to read data from csv files
     def readCsvCoordinates(self):
-        with open('mapCoordinates.csv', 'r', newline='',
+        with open('mapCoordinates.csv', 'r+', newline='',
                   encoding='utf-8') as savedItemsIO:  # Open savedItems.csv file (must be same directory as this program)
             for row in savedItemsIO:
                 self.coordinatesXY.append(row.split(","))
@@ -35,10 +38,15 @@ class GUI:
         for i in range(len(self.coordinatesXY)):
             self.station_name.append(self.coordinatesXY[i][4].replace('\r\n', ""))
 
-        with open('stn_breakdown.csv', 'r', newline='',
+        with open('stn_breakdown.csv', 'r+', newline='',
                   encoding='utf-8') as savedItemsIO:  # Open savedItems.csv file (must be same directory as this program)
             for row in savedItemsIO:
                 self.brokedownstations.append(row.split(","))
+
+        with open('bus_stations.csv', 'r+', newline='',
+                  encoding='utf-8') as savedItemsIO:  # Open savedItems.csv file (must be same directory as this program)
+            for row in savedItemsIO:
+                self.bus_stations.append(row.split(","))
 
     # Function that instantiates the overall GUI
     def guiInstance(self, mainGUI):
@@ -49,6 +57,8 @@ class GUI:
         map = Canvas(mainGUI, bg="white", height=750, width=1200)
         mapimage = ImageTk.PhotoImage(Image.open('mrtMap.png').resize((1200, 800)))
         self.initMap(map, mapimage)
+
+        self.displayBusStations(map)
 
         map2 = Canvas(mainGUI, bg="white", height=130, width=250)
         map2.place(x=1230, y=550)
@@ -117,10 +127,14 @@ class GUI:
         startButton.config(font=("Arial", 30))
         startButton.place(x=1230, y=270, height=50, width=250)
 
+
+
         map.bind('<Button-1>', lambda event: self.onClick(event, currentLocation, currentLocationCircle, map, 1))
         map.bind('<Button-3>', lambda event: self.onClick(event, destination, destinationLocationCircle, map, 2))
 
         self.displayBreakdown(map)
+
+
 
         mainGUI.mainloop()  # Run the GUI
 
@@ -205,3 +219,18 @@ class GUI:
                                                               int(self.coordinatesXY[j][2]) + 5,
                                                               int(self.coordinatesXY[j][3]) + 5,
                                                               fill='BLACK')
+
+    def displayBusStations(self, map):
+        for i in range(len(self.bus_stations)):
+            map.delete(self.busCircle[i])
+            for j in range(len(self.coordinatesXY)):
+                if self.bus_stations[i][0] == self.coordinatesXY[j][5].replace("\r\n", ""):
+                    self.busCircle[i] = map.create_oval(int(self.coordinatesXY[j][0])+2,
+                                                              int(self.coordinatesXY[j][1])+2,
+                                                              int(self.coordinatesXY[j][2])-2,
+                                                              int(self.coordinatesXY[j][3])-2,
+                                                              fill='ORANGE')
+
+            legendLabel = Label(map, text=self.bus_stations[i][1], bg = "white")
+            legendLabel.config(font=("Arial", 5,'bold'))
+            legendLabel.place(x=int(self.bus_stations[i][2])-10, y=int(self.bus_stations[i][3])+15, height=15, width=len(self.bus_stations[i][1])*4)
