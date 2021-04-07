@@ -21,6 +21,7 @@ class GUI:
     brokedownstations = []
     bus_stations = []
 
+    # GUI class constructor
     def __init__(self):
         self.readCsvCoordinates()
         self.routeCircle = [None] * len(self.coordinatesXY)
