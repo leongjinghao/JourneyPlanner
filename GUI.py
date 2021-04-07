@@ -24,7 +24,7 @@ class GUI:
     def __init__(self):
         self.readCsvCoordinates()
         self.routeCircle = [None] * len(self.coordinatesXY)
-        self.breakdownCircle = [None] * len(self.brokedownstations[0])
+        self.breakdownCircle = [None] * len(self.brokedownstations)
         self.busCircle = [None] * len(self.bus_stations)
         self.guiInstance(self.mainGUI)
 
@@ -41,7 +41,7 @@ class GUI:
         with open('stn_breakdown.csv', 'r+', newline='',
                   encoding='utf-8') as savedItemsIO:  # Open savedItems.csv file (must be same directory as this program)
             for row in savedItemsIO:
-                self.brokedownstations.append(row.split(","))
+                self.brokedownstations = row.split(",")
 
         with open('bus_stations.csv', 'r+', newline='',
                   encoding='utf-8') as savedItemsIO:  # Open savedItems.csv file (must be same directory as this program)
@@ -157,8 +157,8 @@ class GUI:
                         int(event.y) <= int(self.coordinatesXY[i][3])):
 
                     for j in range(len(
-                            self.brokedownstations[0])):  # Check if station selected by user is a broken down station
-                        if self.brokedownstations[0][j].replace(" ", "") == self.coordinatesXY[i][5].replace("\r\n",
+                            self.brokedownstations)):  # Check if station selected by user is a broken down station
+                        if self.brokedownstations[j].replace(" ", "") == self.coordinatesXY[i][5].replace("\r\n",
                                                                                                              ""):
                             mode = 3
 
@@ -210,10 +210,10 @@ class GUI:
 
     # Function to display unavailable stations
     def displayBreakdown(self, map):
-        for i in range(len(self.brokedownstations[0])):
+        for i in range(len(self.brokedownstations)):
             map.delete(self.breakdownCircle[i])
             for j in range(len(self.coordinatesXY)):
-                if self.brokedownstations[0][i].replace(" ", "") == self.coordinatesXY[j][5].replace("\r\n", ""):
+                if self.brokedownstations[i].replace(" ", "") == self.coordinatesXY[j][5].replace("\r\n", ""):
                     self.breakdownCircle[i] = map.create_oval(int(self.coordinatesXY[j][0]) - 5,
                                                               int(self.coordinatesXY[j][1]) - 5,
                                                               int(self.coordinatesXY[j][2]) + 5,
